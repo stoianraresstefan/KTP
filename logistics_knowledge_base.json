@@ -1,0 +1,63 @@
+{
+    "Knowledge base": [
+        {
+            "topic": "logistics_start",
+            "issues": [
+                {
+                    "name": "high_transport_costs",
+                    "type": "yes_no",
+                    "question": "Are the prices of transportation too high?"
+                },
+                {
+                    "name": "delayed_deliveries",
+                    "type": "yes_no",
+                    "question": "Are you experiencing frequent delivery delays?"
+                }
+            ]
+        },
+        {
+            "topic": "inventory_management",
+            "issues": [
+                {
+                    "name": "stockouts",
+                    "type": "yes_no",
+                    "question": "Do you often run out of stock for popular items?"
+                },
+                {
+                    "name": "excess_inventory",
+                    "type": "yes_no",
+                    "question": "Do you have excess inventory sitting idle in warehouses?"
+                }
+            ]
+        }
+    ],
+    "Facts": [],
+    "Rules": [
+        {
+            "current topic": "logistics_start",
+            "required issues": [
+                "high_transport_costs",
+                "delayed_deliveries"
+            ],
+            "number": 1,
+            "new direction": "inventory_management",
+            "else": "conclusion_transport"
+        },
+        {
+            "current topic": "inventory_management",
+            "required issues": [
+                "stockouts",
+                "excess_inventory"
+            ],
+            "number": 2,
+            "new direction": "conclusion_inventory_issues",
+            "else": "conclusion_no_inventory_issues"
+        }
+    ],
+    "Conclusions": {
+        "conclusion_transport": "Your logistics issue lies in transportation. Consider optimizing routes or negotiating better rates.",
+        "conclusion_inventory_issues": "You are experiencing inventory issues. Consider improving your inventory tracking systems.",
+        "conclusion_no_inventory_issues": "You have no major inventory issues. Focus on improving efficiency in other areas.",
+        "conclusion_optimization": "Your logistics setup is running efficiently! Continue monitoring key metrics for improvement."
+    }
+}
