@@ -70,6 +70,14 @@ class Logic:
             if vehicle in available_vehicles and volume <= max_volume and weight <= max_weight:
                 if "is_international" and "is_perishable" in self.facts:
                     return f"{vehicle}_international_fridge"
+                if "is_international" and "is_hazardous" in self.facts:
+                    return f"{vehicle}_international_hazardous"
+                if "is_international" and "is_fragile" in self.facts:
+                    return f"{vehicle}_international_fragile"
+                if "is_international" and "requires_extra_security" in self.facts:
+                    return f"{vehicle}_international_extra_security"
+                if "is_international" in self.facts:
+                    return f"{vehicle}_international"
                 if "is_perishable" in self.facts:
                     return f"{vehicle}_fridge"
                 if "is_fragile" in self.facts:
