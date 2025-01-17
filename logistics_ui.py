@@ -11,16 +11,16 @@ class UI:
 
     def update_text_frame(self, txt: str) -> None:
         "Updates the text in the main frame."
-        label = tk.Label(master=self.app.main_frame, text=txt, bg="white", wraplength=400, justify="left")
+        label = tk.Label(master=self.app.main_frame, text=txt, bg="white", fg="black", wraplength=400, justify="left")
         label.pack(pady=20)
 
     def update_buttons(self, question: str, yes_callback: Callable[[], None], no_callback: Callable[[], None]) -> None:
         "Updates the main frame with Yes/No buttons."
-        question_label = tk.Label(master=self.app.main_frame, text=question, bg="white", wraplength=400)
+        question_label = tk.Label(master=self.app.main_frame, text=question, bg="white", fg="black", wraplength=400)
         question_label.pack(pady=20)
-        yes_btn = tk.Button(master=self.app.main_frame, text="Yes", command=yes_callback, bg="green", fg="white")
+        yes_btn = tk.Button(master=self.app.main_frame, text="Yes", command=yes_callback, bg="green", fg="black")
         yes_btn.pack(side="left", padx=10, pady=10)
-        no_btn = tk.Button(master=self.app.main_frame, text="No", command=no_callback, bg="red", fg="white")
+        no_btn = tk.Button(master=self.app.main_frame, text="No", command=no_callback, bg="red", fg="black")
         no_btn.pack(side="right", padx=10, pady=10)
 
     def ask_text_input(self, issue: Dict[str, str], current_topic: str) -> None: # CAUSES A LOT OF ERRORS
@@ -37,7 +37,7 @@ class UI:
 
         # Visuals
         self.app.clear_frame()
-        label = tk.Label(master=self.app.main_frame, text=issue["question"], bg="white", wraplength=400)
+        label = tk.Label(master=self.app.main_frame, text=issue["question"], bg="white", fg="black", wraplength=400)
         label.pack(pady=20)
         entry = tk.Entry(master=self.app.main_frame)
         entry.pack(pady=10)
