@@ -68,6 +68,16 @@ class Logic:
 
         for vehicle, max_volume, max_weight in vehicles:
             if vehicle in available_vehicles and volume <= max_volume and weight <= max_weight:
+                if "is_urgent" and "is_perishable" in self.facts:
+                    return f"{vehicle}_urgent_fridge"
+                if "is_urgent" and "is_hazardous" in self.facts:
+                    return f"{vehicle}_urgent_hazardous"
+                if "is_urgent" and "is_fragile" in self.facts:
+                    return f"{vehicle}_urgent_fragile"
+                if "is_urgent" and "requires_extra_security" in self.facts:
+                    return f"{vehicle}_urgent_extra_security"
+                if "is_urgent" in self.facts:
+                    return f"{vehicle}_urgent"
                 if "is_international" and "is_perishable" in self.facts:
                     return f"{vehicle}_international_fridge"
                 if "is_international" and "is_hazardous" in self.facts:
