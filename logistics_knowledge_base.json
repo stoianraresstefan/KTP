@@ -11,6 +11,16 @@
             ]
         },
         {
+            "topic": "vehicle_destination",
+            "issues": [
+                {
+                    "name": "is_international",
+                    "type": "yes_no",
+                    "question": "Is the shipment international?"
+                }
+            ]
+        },
+        {
             "topic": "shipment_hazard",
             "issues": [
                 {
@@ -98,6 +108,7 @@
     ],
     "Facts": [
         "has_shipment",
+        "is_international",
         "is_perishable",
         "all_trucks_available"
     ],
@@ -108,8 +119,17 @@
                 "has_shipment"
             ],
             "number": 1,
-            "new direction": "shipment_perishable",
+            "new direction": "vehicle_destination",
             "else": "conclusion_no_shipment"
+        },
+        {
+            "current topic": "vehicle_destination",
+            "required issues": [
+                "is_international"
+            ],
+            "number": 1,
+            "new direction": "shipment_perishable",
+            "else": "shipment_perishable"
         },
         {
             "current topic": "shipment_perishable",
@@ -182,21 +202,26 @@
         "conclusion_no_shipment": "Nothing to help with, have a good day!",
         "conclusion_invalid_shipment": "Invalid shipment details. Please try again.",
         "conclusion_invalid_dimensions": "Invalid dimensions entered. Please try again.",
+        "conclusion_invalid_format": "Invalid format entered. Please try again.",
+        "van_international_fridge": "A refrigerated van that complies to international standards is required for this shipment.",
         "van_fridge": "A refrigerated van is required for this shipment.",
         "van_normal": "A van is sufficient for this shipment.",
         "van_fragile": "A van with specialized fragile protocol is required for this shipment.",
         "van_hazardous": "A van with hazardous material protocol is required for this shipment.",
         "van_extra_security": "An armored van with extra security measures is required for this shipment.",
+        "box_truck_international_fridge": "A refrigerated van box that complies to international standards is required for this shipment.",
         "box_truck_fridge": "A refrigerated van box is required for this shipment.",
         "box_truck_normal": "A van box is sufficient for this shipment.",
         "box_truck_fragile": "A van box with specialized fragile protocol is required for this shipment.",
         "box_truck_hazardous": "A van box with hazardous material protocol is required for this shipment.",
         "box_truck_extra_security": "An armored van box with extra security measures is required for this shipment.",
+        "semi_trailer_truck_international_fridge": "A refrigerated semi trailer truck that complies to international standards is required for this shipment.",
         "semi_trailer_truck_fridge": "A refrigerated semi trailer truck is required for this shipment.",
         "semi_trailer_truck_normal": "A semi trailer truck is sufficient for this shipment.",
         "semi_trailer_truck_fragile": "A semi trailer truck with specialized fragile protocol is required for this shipment.",
         "semi_trailer_truck_hazardous": "A semi trailer truck with hazardous material protocol is required for this shipment.",
         "semi_trailer_truck_extra_security": "An armored semi trailer truck with extra security measures is required for this shipment.",
+        "jumbo_truck_international_fridge": "A refrigerated jumbo truck that complies to international standards is required for this shipment.",
         "jumbo_truck_fridge": "A refrigerated jumbo truck is required for this shipment.",
         "jumbo_truck_normal": "A jumbo truck is sufficient for this shipment.",
         "jumbo_truck_fragile": "A jumbo truck with specialized fragile protocol is required for this shipment.",

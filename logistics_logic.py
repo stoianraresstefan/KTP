@@ -41,13 +41,6 @@ class Logic:
                     return rule.get("else", "conclusion")
         return "conclusion"
 
-    def determine_category(self, is_perishable: str) -> str:
-        "Determines the vehicle category"
-        if is_perishable == "yes":
-            return "category_a"
-        else:
-            return "category_b"
-
     def calculate_volume(self, dimensions: str) -> tuple[Any, Any] | int:
         "Calculates the volume"
         try:
@@ -75,6 +68,8 @@ class Logic:
 
         for vehicle, max_volume, max_weight in vehicles:
             if vehicle in available_vehicles and volume <= max_volume and weight <= max_weight:
+                if "is_international" and "is_perishable" in self.facts:
+                    return f"{vehicle}_international_fridge"
                 if "is_perishable" in self.facts:
                     return f"{vehicle}_fridge"
                 if "is_fragile" in self.facts:

@@ -38,7 +38,7 @@ class UI:
                     else:
                         self.display_conclusion("conclusion_invalid_dimensions")  # Invalid input
                 else:
-                    self.display_conclusion("conclusion_invalid_dimensions")  # Invalid input format
+                    self.display_conclusion("conclusion_invalid_format")  # Invalid input format
 
         # Visuals
         self.app.clear_frame()
