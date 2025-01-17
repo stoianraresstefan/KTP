@@ -76,9 +76,15 @@ class Logic:
         for vehicle, max_volume in vehicles:
             if vehicle in available_vehicles and volume <= max_volume:
                 if "is_perishable" in self.facts:
-                    return f"{vehicle}_category_a"
+                    return f"{vehicle}_fridge"
+                if "is_fragile" in self.facts:
+                    return f"{vehicle}_fragile"
+                if "is_hazardous" in self.facts:
+                    return f"{vehicle}_hazardous"
+                if "requires_extra_security" in self.facts:
+                    return f"{vehicle}_extra_security"
                 else:
-                    return f"{vehicle}_category_b"
+                    return f"{vehicle}_normal"
 
         return "no_vehicle"
 
