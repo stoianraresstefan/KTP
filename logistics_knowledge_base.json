@@ -1,63 +1,138 @@
 {
     "Knowledge base": [
         {
-            "topic": "logistics_start",
+            "topic": "shipment_check",
             "issues": [
                 {
-                    "name": "high_transport_costs",
+                    "name": "has_shipment",
                     "type": "yes_no",
-                    "question": "Are the prices of transportation too high?"
-                },
-                {
-                    "name": "delayed_deliveries",
-                    "type": "yes_no",
-                    "question": "Are you experiencing frequent delivery delays?"
+                    "question": "Do you have a shipment to deliver?"
                 }
             ]
         },
         {
-            "topic": "inventory_management",
+            "topic": "shipment_perishable",
             "issues": [
                 {
-                    "name": "stockouts",
+                    "name": "is_perishable",
                     "type": "yes_no",
-                    "question": "Do you often run out of stock for popular items?"
+                    "question": "Is the shipment perishable?"
+                }
+            ]
+        },
+        {
+            "topic": "truck_availability",
+            "issues": [
+                {
+                    "name": "all_trucks_available",
+                    "type": "yes_no",
+                    "question": "Are all trucks available?"
+                }
+            ]
+        },
+        {
+            "topic": "individual_truck_availability",
+            "issues": [
+                {
+                    "name": "van_available",
+                    "type": "yes_no",
+                    "question": "Is the van available?"
                 },
                 {
-                    "name": "excess_inventory",
+                    "name": "box_truck_available",
                     "type": "yes_no",
-                    "question": "Do you have excess inventory sitting idle in warehouses?"
+                    "question": "Is the box truck available?"
+                },
+                {
+                    "name": "semi_trailer_truck_available",
+                    "type": "yes_no",
+                    "question": "Is the semi-trailer truck available?"
+                },
+                {
+                    "name": "jumbo_truck_available",
+                    "type": "yes_no",
+                    "question": "Is the jumbo truck available?"
+                }
+            ]
+        },
+        {
+            "topic": "shipment_dimensions",
+            "issues": [
+                {
+                    "name": "dimensions",
+                    "type": "text_input",
+                    "question": "Enter the shipment dimensions (H, L, W in meters):"
                 }
             ]
         }
     ],
-    "Facts": [],
+    "Facts": [
+        "has_shipment",
+        "is_perishable",
+        "all_trucks_available"
+    ],
     "Rules": [
         {
-            "current topic": "logistics_start",
+            "current topic": "shipment_check",
             "required issues": [
-                "high_transport_costs",
-                "delayed_deliveries"
+                "has_shipment"
             ],
             "number": 1,
-            "new direction": "inventory_management",
-            "else": "conclusion_transport"
+            "new direction": "shipment_perishable",
+            "else": "conclusion_no_shipment"
         },
         {
-            "current topic": "inventory_management",
+            "current topic": "shipment_perishable",
             "required issues": [
-                "stockouts",
-                "excess_inventory"
+                "is_perishable"
             ],
-            "number": 2,
-            "new direction": "conclusion_inventory_issues",
-            "else": "conclusion_no_inventory_issues"
+            "number": 1,
+            "new direction": "truck_availability",
+            "else": "truck_availability"
+        },
+        {
+            "current topic": "truck_availability",
+            "required issues": [
+                "all_trucks_available"
+            ],
+            "number": 1,
+            "new direction": "shipment_dimensions",
+            "else": "individual_truck_availability"
+        },
+        {
+            "current topic": "individual_truck_availability",
+            "required issues": [
+                "van_available",
+                "box_truck_available",
+                "semi_trailer_truck_available",
+                "jumbo_truck_available"
+            ],
+            "number": 1,
+            "new direction": "shipment_dimensions",
+            "else": "shipment_dimensions"
+        },
+        {
+            "current topic": "shipment_dimensions",
+            "required issues": [
+                "dimensions"
+            ],
+            "number": 1,
+            "new direction": "vehicle_decision",
+            "else": "conclusion_invalid_dimensions"
         }
     ],
     "Conclusions": {
-        "conclusion_transport": "Your logistics issue lies in transportation. Consider optimizing routes or negotiating better rates.",
-        "conclusion_inventory_issues": "You are experiencing inventory issues. Consider improving your inventory tracking systems.",
-        "conclusion_no_inventory_issues": "You have no major inventory issues. Focus on improving efficiency in other areas.",
-        "conclusion_optimization": "Your logistics setup is running efficiently! Continue monitoring key metrics for improvement."
+        "conclusion_no_shipment": "Nothing to help with, have a good day!",
+        "conclusion_invalid_shipment": "Invalid shipment details. Please try again.",
+        "conclusion_invalid_dimensions": "Invalid dimensions entered. Please try again.",
+        "van_category_a": "Van (Category A) is required for the shipment.",
+        "van_category_b": "Van (Category B) is sufficient for the shipment.",
+        "box_truck_category_a": "Box truck (Category A) is required for the shipment.",
+        "box_truck_category_b": "Box truck (Category B) is sufficient for the shipment.",
+        "semi_trailer_truck_category_a": "Semi-trailer truck (Category A) is required for the shipment.",
+        "semi_trailer_truck_category_b": "Semi-trailer truck (Category B) is sufficient for the shipment.",
+        "jumbo_truck_category_a": "Jumbo truck (Category A) is required for the shipment.",
+        "jumbo_truck_category_b": "Jumbo truck (Category B) is sufficient for the shipment.",
+        "no_vehicle": "No suitable vehicle is available for the shipment."
     }
 }
