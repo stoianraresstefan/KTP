@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Tuple
 
 
 class Logic:
@@ -48,33 +48,33 @@ class Logic:
         else:
             return "category_b"
 
-    def calculate_volume(self, dimensions: str) -> float:
+    def calculate_volume(self, dimensions: str) -> tuple[Any, Any] | int:
         "Calculates the volume"
         try:
-            h, l, w = map(float, dimensions.split(","))
-            return h * l * w
+            h, l, w, weight = map(float, dimensions.split(","))
+            return h * l * w, weight
         except ValueError:
             return 0
 
-    def determine_vehicle(self, volume: float) -> str:
+    def determine_vehicle(self, volume: float, weight: float) -> str:
         "Determines which vehicle is most optimal"
         vehicles = [
-            ("van", 1.5),
-            ("box_truck", 2.5),
-            ("semi_trailer_truck", 31),
-            ("jumbo_truck", 60)
+            ("van", 12, 1.25),
+            ("box_truck", 34, 2.5),
+            ("semi_trailer_truck", 40, 3.5),
+            ("jumbo_truck", 102, 24.0)
         ]
 
         # Here we check which trucks are available
         if "all_trucks_available" in self.facts:
-            available_vehicles = [vehicle for vehicle, _ in vehicles]
+            available_vehicles = [vehicle for vehicle, _, _ in vehicles]
         else:
             available_vehicles = [
-                vehicle for vehicle, _ in vehicles if f"{vehicle}_available" in self.facts
+                vehicle for vehicle, _, _ in vehicles if f"{vehicle}_available" in self.facts
             ]
 
-        for vehicle, max_volume in vehicles:
-            if vehicle in available_vehicles and volume <= max_volume:
+        for vehicle, max_volume, max_weight in vehicles:
+            if vehicle in available_vehicles and volume <= max_volume and weight <= max_weight:
                 if "is_perishable" in self.facts:
                     return f"{vehicle}_fridge"
                 if "is_fragile" in self.facts:

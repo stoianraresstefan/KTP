@@ -91,22 +91,15 @@
                 {
                     "name": "dimensions",
                     "type": "text_input",
-                    "question": "Enter the shipment dimensions (H, L, W in meters):"
+                    "question": "Enter the shipment dimensions (Height (meters), Length (meters), Width (meters), Weight (tons)):"
                 }
             ]
         }
     ],
     "Facts": [
         "has_shipment",
-        "no is_perishable",
-        "no is_hazardous",
-        "no is_fragile",
-        "no requires_extra_security",
-        "no all_trucks_available",
-        "no van_available",
-        "no box_truck_available",
-        "no semi_trailer_truck_available",
-        "no jumbo_truck_available"
+        "is_perishable",
+        "all_trucks_available"
     ],
     "Rules": [
         {

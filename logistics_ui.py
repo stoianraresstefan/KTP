@@ -24,16 +24,21 @@ class UI:
         no_btn.pack(side="right", padx=10, pady=10)
 
     def ask_text_input(self, issue: Dict[str, str], current_topic: str) -> None: # CAUSES A LOT OF ERRORS
-        "Displays a text input box for the user to respond to a question." 
+        "Displays a text input box for the user to respond to a question."
+
         def submit() -> None:
             response = entry.get().strip()
-            if response:  # Change accordingly to the changes you want to make
-                volume = self.logic.calculate_volume(response)
-                if volume > 0:
-                    vehicle = self.logic.determine_vehicle(volume)
-                    self.display_conclusion(vehicle)
+            if response:  # Ensure the response is not empty
+                result = self.logic.calculate_volume(response)
+                if isinstance(result, tuple) and len(result) == 2:  # Ensure we have a tuple with two values
+                    volume, weight = result
+                    if volume > 0 and weight > 0:
+                        vehicle = self.logic.determine_vehicle(volume, weight)
+                        self.display_conclusion(vehicle)
+                    else:
+                        self.display_conclusion("conclusion_invalid_dimensions")  # Invalid input
                 else:
-                    self.display_conclusion("conclusion_invalid_dimensions")  # Invalid input
+                    self.display_conclusion("conclusion_invalid_dimensions")  # Invalid input format
 
         # Visuals
         self.app.clear_frame()
